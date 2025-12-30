@@ -27,6 +27,17 @@ jobs:
           ruby-version: '3.3'
           bundler-cache: true
       
+      - name: Create Gemfile if missing
+        run: |
+          if [ ! -f "Gemfile" ]; then
+            echo "Creating Gemfile..."
+            cat > Gemfile << 'EOF'
+source "https://rubygems.org"
+gem "github-pages", group: :jekyll_plugins
+gem "webrick"
+EOF
+          fi
+      
       - name: Install dependencies
         run: |
           bundle config path vendor/bundle
